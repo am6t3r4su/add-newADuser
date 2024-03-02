@@ -1,11 +1,11 @@
 <#
-  .SYSNOPSIS
+  .SYNOPSIS
   .DESCRIPTION
   .NOTES
 #>
 
 #Necessary modules
-Import ActiveDirectory
+Import-Module ActiveDirectory
 Install-Module NTFSSecurity
 
 
