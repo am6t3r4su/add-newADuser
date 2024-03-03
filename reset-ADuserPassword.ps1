@@ -14,7 +14,7 @@ Write-Host -F Cyan "
 
 #Check if default log file exist
 Write-Host -F Cyan "[*] Checking if default log file exist ..."
-If ([bool](Test-Path $fileOfLog | Out-Null)) {
+If ([bool](Test-Path $fileOfLog)) {
         Write-Host -F Green "[+] Ok!"       
 } Else {
         Write-Host -F Yellow "[!] Warning! Default usefull log file does not exist"
