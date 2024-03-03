@@ -1,13 +1,17 @@
 # add-newADuser
+
+create-newADuser.ps1
+-
+
 An interactive PowerShell script to add new user in Active Directory include : 
   - placement in Organisational Unit,
   - add to global security group (following AGDLP Microsoft's recommended procedure)
   - set home drive mapping.
 
-# Screenshot
-
-An example of an user added in Active Directory
+Screenshot
 -
+An example of an user added in Active Directory
+
   - Domain name : axeplane.loc
   - Name : Pasteur
   - Given name : Elsa
