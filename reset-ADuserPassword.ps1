@@ -31,10 +31,10 @@ Function Get-ADUserCreds {
 
         Begin {}
         Process {
-                # Match if login exist 
+                #Match if login exist 
                 Do{$Global:adLoginID   = (Read-Host "Set an user login who exist in domain`nLogin")
                 While ([string]::IsNullOrWhiteSpace($adLoginID)) {$Global:adLoginID = (Read-Host -Prompt "Login can't be empty")}} Until ([bool](Get-ADUser -Filter {SamAccountName -eq $adLoginID}))
-                # Match if password is complex
+                #Match if password is complex
                 Do {$Global:adUserPassword = (Read-Host "`nCreate a complex password`nThe password must be a minimum length of 14 characters including capital letters, lowercase letters, numbers and specials characters`nPassword")
                 } Until (($adUserPassword.Length -ge 14) -and ($adUserPassword -match '[a-z]') -and ($adUserPassword -match '[A-Z]') -and ($adUserPassword -match '\d') -and ($adUserPassword -match '[^a-zA-Z0-9]'))
                 Start-Sleep -Seconds 1.5; Write-Host -F Green "[+] Password of $adLoginID has been successfully created!"
@@ -68,16 +68,16 @@ Function Reset-ADUserPassword {
 
 
 #Test Get-ADUserCreds, Reset-ADUserPassword, Set-ADAccountPassword functions
-Try{
+Try {
         Get-ADUserCreds     
         Reset-ADUserPassword -User $adLoginID `
                              -Password $adUserPassword `
                              -Incident $causeOfIncident
         #Apply password reset
-        #Set-ADAccountPassword -Identity $adLoginID -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $adUserPassword -Force)
-        #Set-ADUser -Identity $adLoginID -ChangePasswordAtLogon $true
+        Set-ADAccountPassword -Identity $adLoginID -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $adUserPassword -Force)
+        Set-ADUser -Identity $adLoginID -ChangePasswordAtLogon $true
         Write-Host -F Green "[+] Password for $adLoginID user has been successfully reseted!"
-}Catch{
+} Catch {
         Write-Error "An error has occurred to reset password`nAborded!"
         Exit 1
 }
@@ -110,21 +110,21 @@ Try {
         Trace-ResetActivity -File $fileOfLog -ActivityReport "$messageTXT"
         Write-Host -F Green "[+] Password reset for $adLoginID user has been logged to default log file"
 
-        #Print
+        #Print results
         Write-Host -F Gray "
         About user
         ----------------------------------------------------------------
-            Login : $adLoginID
+                Login : $adLoginID
 
         Incident
         ----------------------------------------------------------------
-            Date : $dateOfLog
-            Cause : $causeOfIncident
+                Date : $dateOfLog
+                Cause : $causeOfIncident
 
-        Log
+                Log
         ----------------------------------------------------------------
-            Log file location : $fileOfLog
-        "
+                Log file location : $fileOfLog
+"
 } Catch {
         Write-Error "An error has occurred to trace reset activity`nArboded!"
         Exit 1
